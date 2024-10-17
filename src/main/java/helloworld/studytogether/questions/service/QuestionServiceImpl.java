@@ -3,7 +3,10 @@ package helloworld.studytogether.questions.service;
 import helloworld.studytogether.user.entity.User;
 import helloworld.studytogether.user.repository.UserRepository;
 import java.io.IOException;
+
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,8 @@ import helloworld.studytogether.questions.repository.QuestionRepository;
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@Getter
+@Setter
 public class QuestionServiceImpl implements QuestionService {
 
   private final QuestionRepository questionRepository;
