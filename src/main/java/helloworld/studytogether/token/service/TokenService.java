@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class TokenService {
+public class TokenService {   // 리프레시토큰 발급 및 관리
 
   private User user;
   private RefreshToken refreshToken;
@@ -78,12 +78,12 @@ public class TokenService {
         .orElseThrow(() -> new RuntimeException("User not found"));
 
     // 새로운 access 토큰 발급 / 갱신
-    String newAccess = jwtUtil.createJwt("access",user, role, 600000L);
-    String newRefresh = jwtUtil.createJwt("refresh",user , role, 60480000L);
+    String newAccess = jwtUtil.createJwt("access",user, role, 600000L); //10분
+    String newRefresh = jwtUtil.createJwt("refresh",user , role, 604800000L);// 7일
 
     // Refresh 토큰 저장 DB에 기존의 Refresh 토큰 삭제 후 새 Refresh 토큰 저장
     refreshTokenRepository.deleteByRefresh(refresh);
-    addRefreshToken(user, newRefresh, 60480000L); // user 객체를 넘김
+    addRefreshToken(user, newRefresh, 604800000L); // user 객체를 넘김
 
     // response, 갱신 작업
     response.setHeader("access", newAccess);
@@ -94,7 +94,7 @@ public class TokenService {
   }
 
 
-@Transactional
+  @Transactional
   private void addRefreshToken(User user, String refreshToken, Long expiredMs) {
     Date expirationDate = new Date(System.currentTimeMillis() + expiredMs);
     if (user.getUserId() == null) {
@@ -116,6 +116,7 @@ public class TokenService {
     cookie.setHttpOnly(true);
     return cookie;
   }
-}
 
+
+}
 
