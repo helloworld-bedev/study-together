@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/answers")
+@RequestMapping("/answers")
 public class AnswerController {
 
     private final AnswerService answerService;
@@ -59,15 +59,6 @@ public class AnswerController {
         answerService.unlikeAnswer(id);
         return ResponseEntity.ok().build();
     }
-    /**
-    // 대댓글 작성
-    @PostMapping("/{answerId}/comments")
-    public ResponseEntity<AnswerDTO> createComment(@PathVariable Long id, @RequestBody AnswerDTO commentDTO) {
-        AnswerDTO createdComment = answerService.createComment(id, commentDTO);
-        return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
-    }
-
-    */
 
     /** 답변 채택
     @PatchMapping("/questions/{questionId}/select-answer/{answerId}")
